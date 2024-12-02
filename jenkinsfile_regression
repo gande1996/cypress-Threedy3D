@@ -1,0 +1,33 @@
+pipeline{
+
+    agent any
+
+    tools {nodejs "NodeJS"}
+    parameters{
+        choice(name:'SPEC', choices: ["./cypress/integration/e2e/external/**/*.spec.ts"], description:"default test suite")
+        choice(name:'BROWSER', choices: ['chrome', 'edge', 'firefox'], description:"Choose your browser")
+    }
+
+    stages{
+            
+        stage('test'){
+            steps{
+               sh "npm install"
+               sh "NO_COLOR=1 npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+            }
+        }   
+    
+    }
+
+     post{
+       
+         always{
+            mail (bcc: '', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL+"console"}", 
+            from: 'devops.team@nextechar.com', replyTo: '', 
+            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", 
+            to: 'akshit.jain@nextechar.com rakesh.ingole@nextechar.com tushar.sharma@nextechar.com General - Automation-QA <0b8d6f7c.nextechar.com@amer.teams.ms>'
+            )
+       
+         }
+}
+}

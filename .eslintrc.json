@@ -1,0 +1,61 @@
+{
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "ignorePatterns": [
+      "test-result",
+      "playwright-report"
+  ],
+  "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "@typescript-eslint"
+  ],
+  "rules": {
+      "indent": [
+          "error",
+          4,
+          {
+              "SwitchCase": 1
+          }
+      ],
+      "linebreak-style": [
+          "error",
+          "unix"
+      ],
+      "quotes": [
+          "error",
+          "single",
+          "avoid-escape"
+      ],
+      "semi": [
+          "error",
+          "never"
+      ],
+      "object-curly:spacing": [
+          "error",
+          "never"
+      ],
+      "brace-style": [
+          "errors",
+          "ltbs"
+      ],
+      "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+              "vars": "all",
+              "args": "all",
+              "ignoreRestSiblings": false
+          }
+      ],
+      "@typescript-eslint/no-empty-function": "off"
+  }
+}

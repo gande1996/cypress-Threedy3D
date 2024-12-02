@@ -1,0 +1,36 @@
+{
+  "baseUrl": "http://portal-test.threedy.ai/",
+  "env": {    
+    "testLevel": "test",
+    "MAILOSAUR_API_KEY": "Vgkf3f77qyzeM3zqoFkPLYcP5CdOAYfh",
+    "serverID":"te7olqpt",
+    "domain" : "@te7olqpt.mailosaur.net"
+  },
+  "experimentalStudio": true,
+  "defaultCommandTimeout": 40000,
+  "pageLoadTimeout": 100000,
+  "requestTimeout": 5000,
+  "&numTestsKeptInMemory": 0,
+  "experimentalFetchPolyfill": false,
+  "experimentalSourceRewriting": false,
+  "chromeWebSecurity": false,
+  "includeShadowDom": true,
+  "integrationFolder": "cypress/integration",
+  "fixturesFolder": "cypress/fixtures",
+  "supportFile": "cypress/support/index.ts",
+  "viewportHeight": 1200,
+  "viewportWidth": 1500,
+  "testFiles": "**/*spec.ts",
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "failOnStatusCode": false, 
+  "experimentalSessionSupport": true,
+  "screenshotOnRunFailure": false,
+  "headless": true,
+  "reporter": "cypress-junit-reporter",
+  "video": false,
+  "videosFolder": "mochawesome/videos",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
+}

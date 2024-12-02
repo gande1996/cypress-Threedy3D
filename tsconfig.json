@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",                         
+    "module": "commonjs",                     
+    "lib": ["dom","es6"],                     
+    "strict": true,
+    "allowJs": false,                           
+    "types": ["cypress", "node", "cypress-real-events", "cypress-file-upload", "cypress-xpath","@shelex/cypress-allure-plugin"],
+    "experimentalDecorators": true,                   
+    "esModuleInterop": true,                  
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "**/*.*"
+  ]
+}

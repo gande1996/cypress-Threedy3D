@@ -1,0 +1,83 @@
+{
+  "name": "apps-3d-cypress-e2e",
+  "version": "1.0.0",
+  "description": "3d cypress e2e automation",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    
+    "cy:smoke:api": "cypress run --spec \"./cypress/integration/api/**/*.spec.ts\"",
+    "API-TEST-ENV": "npm run cy:smoke:api --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/API-TEST-ENV-[hash].xml",
+    "cy:staging:api": "cypress run --env testLevel=staging --spec \"./cypress/integration/api/**/*.spec.ts\"",
+    "API-STAGE-ENV": "npm run cy:staging:api --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/API-STAGE-ENV-[hash].xml",
+
+    "cy:test:regression:ext-chrome": "cypress run --browser chrome --spec \"./cypress/integration/regression/external/**/*.spec.ts\"",
+    "SELFSERVE-REGRESSION-TEST-ENV": "npm run cy:test:e2e:ext-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/SELFSERVE-REGRESSION-TEST-ENV-[hash].xml",
+    "cy:test:smoke:ext-chrome": "cypress run --browser chrome --spec \"./cypress/integration/smoke/external/**/*.spec.ts\"",
+    "SELFSERVE-SMOKE-TEST-ENV": "npm run cy:test:smoke:ext-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/SELFSERVE-SMOKE-TEST-ENV-[hash].xml",
+    "cy:stage:regression:ext-chrome": "cypress run --env testLevel=staging --browser chrome --spec \"./cypress/integration/regression/external/**/*.spec.ts\"",
+    "SELFSERVE-REGRESSION-STAGE-ENV": "npm run cy:stage:e2e:ext-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/SELFSERVE-REGRESSION-STAGE-ENV-[hash].xml",
+    "cy:stage:smoke:ext-chrome": "cypress run --env testLevel=staging --browser chrome --spec \"./cypress/integration/smoke/external/**/*.spec.ts\"",
+    "SELFSERVE-SMOKE-STAGE-ENV": "npm run cy:stage:smoke:ext-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/SELFSERVE-SMOKE-STAGE-ENV-[hash].xml",
+
+    "cy:test:e2e:ext-chrome-login-only": "cypress run --browser chrome --env allure=true --spec \"./cypress/integration/e2e/external/login/01_login.spec.ts\"",
+    "cy:e2e:test:ext:login:report": "npm run cy:test:e2e:ext-chrome-login-only --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/extTEST-[hash].xml",
+
+    "cy:test:e2e:int-chrome": "cypress run --browser chrome --spec \"./cypress/integration/e2e/internal/**/*.spec.ts\"",
+    "PORTAL-REGRESSION-TEST-ENV": "npm run cy:test:e2e:int-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/PORTAL-REGRESSION-TEST-ENV-[hash].xml",
+    "cy:test:smoke:int-chrome": "cypress run --browser chrome --spec \"./cypress/integration/smoke/internal/**/*.spec.ts\"",
+    "PORTAL-SMOKE-TEST-ENV": "npm run cy:test:smoke:int-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/PORTAL-SMOKE-TEST-ENV-[hash].xml",
+    "cy:stage:e2e:int-chrome": "cypress run --env testLevel=staging --browser chrome --spec \"./cypress/integration/e2e/internal/**/*.spec.ts\"",
+    "PORTAL-REGRESSION-STAGE-ENV": "npm run cy:stage:e2e:int-chrome --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/PORTAL-REGRESSION-STAGE-ENV-[hash].xml",
+    "cy:stage:smoke:int": "cypress run --env testLevel=staging --browser chrome --spec \"./cypress/integration/smoke/internal/**/*.spec.ts\"",
+    "PORTAL-SMOKE-STAGE-ENV": "npm run cy:stage:smoke:int --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/PORTAL-SMOKE-STAGE-ENV-[hash].xml",
+
+    "cy:run:smoke-api": "cypress run --spec \"./cypress/integration/api/**/*.spec.ts\"",
+    "cy-junit-report-api": "npm run cy:run:smoke-api --reporter cypress-junit-reporter -- --reporter-options mochaFile=reports/TEST-[hash].xml"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "env": {
+    "DISPLAY": ":99"
+  },
+  "author": "Rakesh Ingole",
+  "license": "ISC",
+  "homepage": "",
+  "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.34.0",
+    "@types/cypress-image-snapshot": "^3.1.6",
+    "@types/lodash": "^4.14.172",
+    "@types/mochawesome": "^6.2.1",
+    "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "allure-commandline": "^2.13.8",
+    "aws-sdk": "^2.1074.0",
+    "cypress": "^8.0.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-fill-command": "^1.0.2",
+    "cypress-junit-reporter": "^1.3.1",
+    "cypress-mailosaur": "^2.12.0",
+    "cypress-multi-reporters": "^1.6.1",
+    "cypress-real-events": "^1.5.0",
+    "cypress-xpath": "^1.6.2",
+    "date-fns": "^2.25.0",
+    "eslint": "^7.23.0",
+    "faker": "^5.5.3",
+    "lodash": "^4.17.21",
+    "mocha": "^10.0.0",
+    "mocha-allure-reporter": "^1.4.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.2.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@ngneat/falso": "^6.1.0",
+    "cypress-ag-grid": "^1.2.0"
+  }
+}

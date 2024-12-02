@@ -1,0 +1,50 @@
+pipeline{
+
+    agent any
+
+    tools {nodejs "NodeJS"}
+    parameters{
+        choice(name:'SUITE', choices: ['API-TEST-ENV', 'API-STAGE-ENV', 'SELFSERVE-REGRESSION-TEST-ENV', 'SELFSERVE-SMOKE-TEST-ENV', 'SELFSERVE-REGRESSION-STAGE-ENV','SELFSERVE-SMOKE-STAGE-ENV', 'PORTAL-REGRESSION-TEST-ENV'], description:"default test suite")
+        choice(name:'BROWSER', choices: ['chrome', 'edge', 'firefox'], description:"Choose your browser")
+    }
+
+    stages{
+            
+        stage('test'){
+            steps{
+               sh "npm install"
+               sh "NO_COLOR=1 npm run ${SUITE} --browser ${BROWSER}"
+            }
+        }          
+    
+    }
+
+     post{
+       
+         always{            
+            
+            // junit '**/reports/junit-report.xml'
+            // archiveArtifacts 'reports/*'
+
+        sh """
+        export PATH="${PATH}:/var/jenkins_home/.local/bin/"        
+            python --version
+            pip install future --use-pep517 --upgrade
+            pip install junitparser
+            /var/jenkins_home/.local/bin/junitparser --version
+            /var/jenkins_home/.local/bin/junitparser merge --glob "reports/API-TEST-ENV-*" "reports/junit-report.xml"
+            pip install trcli            
+            trcli parse_junit --help
+            trcli -y \
+              -h https://nextechar.testrail.io/ \
+              --project "Threedy Self-Serve" \
+              -u "testnextechar1@gmail.com" \
+              -p "Test1234!" \
+              parse_junit \
+              --title "JENKINS UPDATE" \
+              --run-description "test" \
+              --file "./reports/junit-report.xml"    
+        """
+        }
+    }
+}

@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    tools {nodejs "NodeJS"}
+    parameters{
+        choice(name:'SUITE', choices: ['API-TEST-ENV', 'API-STAGE-ENV', 'SELFSERVE-REGRESSION-TEST-ENV', 'SELFSERVE-SMOKE-TEST-ENV', 'SELFSERVE-REGRESSION-STAGE-ENV','SELFSERVE-SMOKE-STAGE-ENV', 'PORTAL-REGRESSION-TEST-ENV'], description:"default test suite")
+        choice(name:'BROWSER', choices: ['chrome', 'edge', 'firefox'], description:"Choose your browser")
+    }
+
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git url: 'git@github.com:NexTech-AR-Solutions/cypress-threedy-test.git', branch: 'main'
+            }
+        }
+
+        stage('Setup virtual environment') {
+            steps {
+                sh """
+                    # Go to test project folder
+                    cd samples/python/pytest
+                    # Setup virtual environment
+                    python3.10 -m venv ./venv
+                """
+            }
+        }
+
+        stage('Execute automated tests') {
+            steps {
+                sh """
+                    # Go to test project folder and activate virtual environment
+                    npm install
+                    NO_COLOR=1 npm run ${SUITE} --browser ${BROWSER}
+                """
+            }
+            post {
+                always {
+                    junit '**/reports/junit-report.xml'
+                    archiveArtifacts 'reports/*'
+               
+                sh """
+                    pip install future --use-pep517 --upgrade
+                    pip install trcli
+                    junitparser merge --glob "reports/API-TEST-ENV-*" "reports/junit-report.xml"
+                    trcli -y \
+                      -h \'https://nextechar.testrail.io/\' \
+                      --project "Threedy Self-Serve" \
+                      -u "testnextechar1@gmail.com" \
+                      -p "Test1234!" \
+                      parse_junit \
+                      --title "3D-Portal Regression Execution Results in TEST Env" \
+                      --run-description test RT job
+                      -f "./reports/junit-report.xml"                 
+                """
+                   
+                }
+            }
+        }
+
+    }
+}

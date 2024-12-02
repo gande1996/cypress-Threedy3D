@@ -1,0 +1,39 @@
+# IDE
+.vscode/
+.idea/
+
+# dependencies
+node_modules/
+
+# reports
+cypress/reports/*
+cypress/reports/assets
+cypress/videos/
+cypress/screenshots/
+snapshots
+report.html 
+public/
+mochawesome/
+report.json
+allure-report/
+allure-results/
+reports
+reports1
+reports2
+reports3
+test-results.xml
+
+# data
+cypress/fixtures/modelId.json
+cypress/downloads/
+cypress/snapshots/
+cypress/fixtures/token.json
+cypress/fixtures/out.json
+cypress/fixtures/output.json
+cypress/fixtures/feed.json
+
+
+# Files
+.DS_Store
+trcli.ps1
+3d-gurock.yml

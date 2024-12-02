@@ -1,0 +1,69 @@
+pipeline{
+
+    agent any
+
+    triggers {
+        cron('00 10 * * 1-5')
+    }
+
+    tools {nodejs "NodeJS"}
+    parameters{        
+        choice(name:'BROWSER', choices: ['chrome', 'edge', 'firefox'], description:"Choose your browser")
+    }
+
+    stages{
+
+                  
+        // stage('Clear Workspace') {
+        //     steps {
+        //         // Delete all files and subdirectories in the workspace
+        //         deleteDir()
+        //     }
+        // }
+            
+        
+        stage('test'){
+            steps{
+               sh "npm install"
+               sh "NO_COLOR=1 npm run SELFSERVE-SMOKE-STAGE-ENV --browser ${BROWSER}"
+            }
+        }   
+    
+    }
+
+     post{
+       
+         always{
+
+            sh """
+            export PATH="${PATH}:/var/lib/jenkins/.local/bin/"        
+            python --version
+            pip install future --use-pep517 --upgrade
+            pip install junitparser
+            /var/lib/jenkins/.local/bin/junitparser --version
+            /var/lib/jenkins/.local/bin/junitparser merge --glob "reports/SELFSERVE-SMOKE-STAGE-ENV-*" "reports/junit-report.xml"
+            pip install trcli            
+            trcli parse_junit --help
+            trcli -y \
+              -h https://nextechar.testrail.io/ \
+              --project "Threedy Self-Serve" \
+              -u "testnextechar1@gmail.com" \
+              -p "Test1234!" \
+              parse_junit \
+              --title "SELFSERVE SMOKE STAGE ENV" \
+              --run-description "test" \
+              --file "./reports/junit-report.xml"    
+            """
+
+            mail (bcc: '', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL+"console"}", 
+            from: 'devops.team@nextechar.com', replyTo: '', 
+            subject: "Threedy_SELFSERVE-SMOKE-STAGE -Test Result ${currentBuild.currentResult}: Job ${env.JOB_NAME}", 
+            to: 'akshit.jain@nextechar.com rakesh.ingole@nextechar.com tushar.sharma@nextechar.com'
+            )
+
+            cleanWs()
+
+       
+         }
+    }
+}
