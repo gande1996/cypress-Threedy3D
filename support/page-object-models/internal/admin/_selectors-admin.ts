@@ -1,0 +1,21 @@
+export const adminSelectors = {
+    emailField:'input[name="email"]',
+    passwordField:'input[name="password"]',
+    usernameField : 'input[name="username"]',
+    firstnameField : 'input[name="first_name"]',
+    lastnameField:'input[name="last_name"]',
+    newUserButton:'.MuiButton-iconSizeSmall',
+    clientDropdown:'.MuiInputBase-inputAdornedEnd:eq(3)',
+    userRoleDropdown:'.MuiOutlinedInput-inputMarginDense:eq(6)',
+    adminUserSelect:'li[data-value="admin"]',
+    emailSorting:'.MuiTableSortLabel-active',
+    edit_delete_updateButton:'[aria-label="select merge strategy"]',
+    retypePasswordField:'input[name="retypedPassword"]',
+    orientationDropdown: '.MuiInput-input:eq(0)',
+    complexityDropdown:'.MuiInput-input:eq(1)',
+    categoryDropdown:'.MuiInput-input:eq(2)',
+    categoryNameField:'.MuiInput-input:eq(3)',
+    createCategoryButton:'.MuiButton-textPrimary',
+    artistCompanyDropdown:'.MuiOutlinedInput-inputMarginDense:eq(5)',
+    artistCompanySelect:'li[data-value="10010"]'
+}
